@@ -3,6 +3,8 @@ import pandas as pd
 
 app = Flask(__name__)
 
+df = pd.read_csv("dictionary.csv")
+
 
 @app.route("/")
 def home():
@@ -10,22 +12,19 @@ def home():
 
 
 @app.route("/api/v1/<word>")
-def api(word:str):
+def api(word: str):
     try:
-        
-        df = pd.read_csv("dictionary.csv")
+
         definition = df.loc[df["word"] == word]["definition"].iloc[0]
 
         result_dictionary = {
             "word": word,
             "definition": definition,
-            }
+        }
         return jsonify(result_dictionary)
 
     except IndexError as e:
-        return jsonify({
-            "status":"error",
-            "message" :f"word {word} not found"})
+        return jsonify({"status": "error", "message": f"word {word} not found"})
 
 
 if __name__ == "__main__":
