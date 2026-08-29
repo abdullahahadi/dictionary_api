@@ -3,7 +3,7 @@ import pandas as pd
 
 app = Flask(__name__)
 
-df = pd.read_csv("dictionary.csv")
+df = pd.read_csv("dataset/dictionary.csv")
 
 
 @app.route("/")
